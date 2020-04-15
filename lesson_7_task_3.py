@@ -6,7 +6,7 @@
 from itertools import product
 from pprint import pprint
 
-from lesson_7_task_1_module import compare, int_val
+from lesson_7_task_3_module import compare, int_val
 
 ADDRESS_WORDS = {'дом', 'улица', 'живет', 'квартира'}
 NAME_WORDS = {'имя', 'зовут', 'фамилия', 'отчество'}
