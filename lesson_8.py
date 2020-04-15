@@ -1,6 +1,10 @@
 from itertools import product
 from pprint import pprint
 
+"""
+Импорт модуля не стал исправлять на короткий
+Мне удобней такое правило именований файлов
+"""
 from lesson_8_module import compare, int_val
 
 ADDRESS_WORDS = {'дом', 'улица', 'живет', 'квартира'}
@@ -9,47 +13,95 @@ AGE_WORDS = {'возраст', 'старше', 'младше'}
 
 
 class Person:
-    def __init__(self, last_name, first_name, middle_name, age, street, house, apartment):
-        self.last_name, self.first_name, self.middle_name, self.age, self.street, self.house, self.apartment = last_name, first_name, middle_name, age, street, house, apartment
+    def __init__(
+            self, last_name, first_name, middle_name,
+            age, street, house, apartment
+    ):
+        """
+        Разбил строку с множественным присвоением на отдельные
+        """
+        self.last_name = last_name
+        self.first_name = first_name
+        self.middle_name = middle_name
+        self.age = age
+        self.street = street
+        self.house = house
+        self.apartment = apartment
         self.key = (first_name, street)
 
     def __repr__(self):
+        """
+        Укоротил "return" менее 79 символов
+        """
         return "Person('%s','%s','%s',%s,'%s',%s,%s)" % (
-            self.last_name, self.first_name, self.middle_name, self.age, self.street, self.house, self.apartment)
+            self.last_name, self.first_name, self.middle_name,
+            self.age, self.street, self.house, self.apartment
+        )
 
     def __eq__(self, obj):
         if type(obj) == Person:
-            return (self.last_name, self.first_name, self.middle_name, self.age, self.street, self.house,
-                    self.apartment) == (
-                       obj.last_name, obj.first_name, obj.middle_name, obj.age, obj.street, obj.house, obj.apartment)
+            """
+            Укоротил "return" менее 79 символов
+            """
+            return (
+                       self.last_name, self.first_name, self.middle_name,
+                       self.age, self.street, self.house, self.apartment
+                   ) == (
+                       obj.last_name, obj.first_name, obj.middle_name,
+                       obj.age, obj.street, obj.house, obj.apartment
+                   )
         elif type(obj) == str:
             return self.__fuzzy_compare(obj)
         else:
             return self.__repr__() == obj.__repr__()
 
     def __fuzzy_compare(self, query):
-        def by_address(Q):
-            Q = Q - ADDRESS_WORDS
-            W = set(self.street.split() + str(self.house).split() + str(self.apartment).split())
+        """
+        Укоротил строки длинее 79 символов
+        Сделал переменные Q и W строчными q и w
+        """
+
+        def by_address(q):
+            q = q - ADDRESS_WORDS
+            w = set(
+                self.street.split() +
+                str(self.house).split() +
+                str(self.apartment).split()
+            )
             rez = []
-            for a, b in product(Q, W):
+            for a, b in product(q, w):
                 rez += [(compare(a, b), a, b)]
             return max(rez)[0]
 
-        def by_name(Q):
-            Q = Q - NAME_WORDS
-            W = set(self.last_name.split() + self.first_name.split() + self.middle_name.split())
+        """
+        Укоротил строки длинее 79 символов
+        Сделал переменные Q и W строчными q и w
+        """
+
+        def by_name(q):
+            q = q - NAME_WORDS
+            w = set(
+                self.last_name.split() +
+                self.first_name.split() +
+                self.middle_name.split()
+            )
             rez = []
-            for a, b in product(Q, W):
+            for a, b in product(q, w):
                 rez += [(compare(a, b), a, b)]
 
             return max(rez)[0]
 
-        def by_age(Q):
-            query_age = max([int_val(q) for q in Q])
-            if 'старше' in Q:
+        """
+        Укоротил строки длинее 79 символов
+        Сделал переменные Q и W строчными q и w
+        Переменную q изменил на i
+        """
+
+        def by_age(q):
+            query_age = max([int_val(i) for i in q])
+            if 'старше' in q:
                 return query_age < self.age
-            if 'младше' in Q:
+            if 'младше' in q:
                 return query_age > self.age
             return query_age + 5 >= self.age >= query_age - 5
 
