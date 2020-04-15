@@ -1,8 +1,3 @@
-"""
-Сделать аналогично для ФИО
-и адреса, разбитых на поля
-"""
-
 from itertools import product
 from pprint import pprint
 
