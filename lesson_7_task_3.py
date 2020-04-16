@@ -16,18 +16,18 @@ AGE_WORDS = {'возраст', 'старше', 'младше'}
 class Person:
     def __init__(self, last_name, first_name, middle_name, age, street, house, apartment):
         self.fullname = (last_name, first_name, middle_name)
-        self.age, self.street, self.house, self.apartment = age, street, house, apartment
+        self.age = age
+        self.address = (street, str(house), str(apartment))
         self.key = (first_name, street)
 
     def __repr__(self):
-        return "Person(%s,%s,'%s',%s,%s)" % (
-            self.fullname, self.age, self.street, self.house, self.apartment)
+        return "Person(%s,%s,%s)" % (
+            self.fullname, self.age, self.address)
 
     def __eq__(self, obj):
         if type(obj) == Person:
-            return (self.fullname, self.age, self.street, self.house,
-                    self.apartment) == (
-                       obj.last_name, obj.first_name, obj.middle_name, obj.age, obj.street, obj.house, obj.apartment)
+            return (self.fullname, self.age, self.address) == (
+                obj.last_name, obj.first_name, obj.middle_name, obj.age, obj.street, obj.house, obj.apartment)
         elif type(obj) == str:
             return self.__fuzzy_compare(obj)
         else:
@@ -36,7 +36,7 @@ class Person:
     def __fuzzy_compare(self, query):
         def by_address(Q):
             Q = Q - ADDRESS_WORDS
-            W = set(self.street.split() + str(self.house).split() + str(self.apartment).split())
+            W = set(self.address)
             rez = []
             for a, b in product(Q, W):
                 rez += [(compare(a, b), a, b)]
