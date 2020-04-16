@@ -93,5 +93,6 @@ for query, person in product(queries, people.values()):
         pprint((query, person))
 
 for query, person in product(queries, people.values()):
+    print(f'{person} = {query}', person == query)
     if person != query:
         pprint((query, person))
