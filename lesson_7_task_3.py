@@ -1,7 +1,7 @@
-'''
+"""
 Сделать аналогично для ФИО
 и адреса, разбитых на поля
-'''
+"""
 
 from itertools import product
 from pprint import pprint
@@ -15,16 +15,17 @@ AGE_WORDS = {'возраст', 'старше', 'младше'}
 
 class Person:
     def __init__(self, last_name, first_name, middle_name, age, street, house, apartment):
-        self.last_name, self.first_name, self.middle_name, self.age, self.street, self.house, self.apartment = last_name, first_name, middle_name, age, street, house, apartment
+        self.fullname = (last_name, first_name, middle_name)
+        self.age, self.street, self.house, self.apartment = age, street, house, apartment
         self.key = (first_name, street)
 
     def __repr__(self):
-        return "Person('%s','%s','%s',%s,'%s',%s,%s)" % (
-            self.last_name, self.first_name, self.middle_name, self.age, self.street, self.house, self.apartment)
+        return "Person(%s,%s,'%s',%s,%s)" % (
+            self.fullname, self.age, self.street, self.house, self.apartment)
 
     def __eq__(self, obj):
         if type(obj) == Person:
-            return (self.last_name, self.first_name, self.middle_name, self.age, self.street, self.house,
+            return (self.fullname, self.age, self.street, self.house,
                     self.apartment) == (
                        obj.last_name, obj.first_name, obj.middle_name, obj.age, obj.street, obj.house, obj.apartment)
         elif type(obj) == str:
@@ -43,7 +44,7 @@ class Person:
 
         def by_name(Q):
             Q = Q - NAME_WORDS
-            W = set(self.last_name.split() + self.first_name.split() + self.middle_name.split())
+            W = set(self.fullname)
             rez = []
             for a, b in product(Q, W):
                 rez += [(compare(a, b), a, b)]
