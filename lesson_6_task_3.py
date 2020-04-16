@@ -10,8 +10,8 @@ from pprint import pprint
 from lesson_6_task_3_module import compare, int_val
 
 NAME_WORDS = {'имя', 'зовут'}
-HEIGHT_WORDS = {'рост', 'выше', 'ниже'}
-WEIGHT_WORDS = {'вес', 'тяжелее', 'легче', 'весит'}
+HEIGHT_WORDS = {'рост', 'выше', 'ниже', 'больше', 'меньше'}
+WEIGHT_WORDS = {'вес', 'тяжелее', 'легче', 'весит', 'больше', 'меньше'}
 
 
 class Person:
@@ -43,17 +43,17 @@ class Person:
 
         def by_height(Q):
             q_height = max([int_val(q) for q in Q])
-            if 'выше' in Q:
+            if 'выше' in Q or 'больше' in Q:
                 return q_height < self.height
-            if 'ниже' in Q:
+            if 'ниже' in Q or 'меньше' in Q:
                 return q_height > self.height
             return q_height + 4 >= self.height >= q_height - 4
 
         def by_weight(Q):
             q_weight = max([int_val(q) for q in Q])
-            if 'тяжелее' in Q:
+            if 'тяжелее' in Q or 'больше' in Q:
                 return q_weight < self.weight
-            if 'легче' in Q:
+            if 'легче' in Q or 'меньше' in Q:
                 return q_weight > self.weight
             return q_weight + 2 >= self.weight >= q_weight - 2
 
@@ -90,6 +90,8 @@ queries = [
     'вес 67',
     'рост 175',
     'весит 72',
+    'больше 168',
+    'меньше 65',
 ]
 
 for query, person in product(queries, people.values()):
