@@ -6,11 +6,8 @@ import random
 
 
 def answer():
-    x = random.choice([0, 1])
-    if x == 0:
-        return 'Нет'
-    else:
-        return 'Да'
+    x = random.choice(['Да', 'Нет'])
+    return x
 
 
 for i in range(10):
